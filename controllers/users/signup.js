@@ -6,7 +6,8 @@ const { nanoid } = require("nanoid");
 const { BASE_URL } = process.env;
 
 const { User } = require("../../models/user");
-const { HttpError, sendEmail } = require("../../helpers");
+const { HttpError } = require("../../helpers");
+const { sendEmail } = require("../../services");
 
 const signup = async (req, res) => {
   const { email, password } = req.body;
