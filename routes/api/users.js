@@ -4,21 +4,24 @@ const ctrl = require("../../controllers/users");
 
 const { ctrlWrapper } = require("../../helpers");
 const { validateBody, authenticate, upload } = require("../../middlewares");
-const { registerLoginSchema } = require("../../models/user");
+const { schemas } = require("../../models/user");
 
 const router = express.Router();
 
 router.post(
   "/signup",
-  validateBody(registerLoginSchema),
+  validateBody(schemas.signUpIn),
   ctrlWrapper(ctrl.signup)
 );
 
+router.get("/verify/:verificationToken", ctrlWrapper(ctrl.verify));
+
 router.post(
-  "/login",
-  validateBody(registerLoginSchema),
-  ctrlWrapper(ctrl.login)
+  "/verify",
+  validateBody(schemas.verify),
+  ctrlWrapper(ctrl.resendVerify)
 );
+router.post("/login", validateBody(schemas.signUpIn), ctrlWrapper(ctrl.login));
 
 router.get("/current", authenticate, ctrlWrapper(ctrl.getCurrent));
 
